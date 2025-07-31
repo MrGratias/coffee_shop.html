@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="source/styles/style.css">
+    <link rel="stylesheet" href="source/styles/fonts.css">
+    <link rel="stylesheet" href="source/styles/preloader.css">
+    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    <title>Home</title>
+
+</head>
+
+<div id="preloader">
+    <img src="source/images/hedgehog.png" alt="Hedgehog">
+    <div class="loading-bar">
+        <div class="bar-fill"></div>
+    </div>
+</div>
+
+
+
+<body>
+
+    <!-- AOS JS -->
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 1000, // длительность анимации в мс
+            offset: 120,   // отступ от нижнего края экрана до начала анимации
+            once: false     // true — анимация запускается 1 раз
+        });
+    </script>
+
+
+    <header>
+
+        <nav class="navbar fixed-top navbar-expand-xl" id="navbar">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#"><img src="source/images/logo.png" alt="404"> Кофе на углу</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                    <div class="navbar-nav">
+                        <a class="nav-link" href="#info">О нас</a>
+                        <a class="nav-link" href="#menu">Меню</a>
+                        <a class="nav-link" href="#gallery">Фото</a>
+                        <a class="nav-link" href="#reviews">Отзывы</a>
+                        <a class="nav-link" href="#map">Где мы</a>
+                        <a class="nav-link" href="#contacts">Контакты</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+    </header>
+
+    <section>
+
+        <div  class="accent">
+            <div class="container p-5" id="info">
+                <div class="row align-items-center">
+                    <div class="col-md-6">
+                        <h2>О нас</h2>
+                        <p>Мы — небольшая, уютная кофейня в центре Алматы. У нас свежая обжарка, авторские напитки и
+                            спокойная атмосфера — идеально для отдыха или продуктивной работы.</p>
+                    </div>
+                    <div class="col-md-6">
+                        <img src="https://static.insales-cdn.com/r/allnD-jy554/rs:fit:1000:1000:1/plain/images/products/1/2713/653920921/coffee-shop-fragrance-oil-web_result.jpg@jpg"
+                            class="img-fluid rounded" alt="Наша кофейня">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container py-5" id="menu">
+            <h2 class="text-center">Меню</h2>
+            <div class="text-center">
+                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4 p-4">
+                    <div data-aos="fade-up" class="col">
+                        <div class="card h-100">
+                            <img src="source/images/expreso.png" class="card-img-top" alt="Капучино"
+                                style="height: 200px; object-fit: contain;">
+                            <div class="card-body">
+                                <h5 class="card-title">Эспрессо</h5>
+                                <p class="card-text">800 ₸</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div data-aos="fade-up" class="col">
+                        <div class="card h-100">
+                            <img src="source/images/capuchino.png" class="card-img-top" alt="Капучино"
+                                style="height: 200px; object-fit: contain;">
+                            <div class="card-body">
+                                <h5 class="card-title">Капучино</h5>
+                                <p class="card-text">1 200 ₸</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div data-aos="fade-up" class="col">
+                        <div class="card h-100">
+                            <img src="source/images/latte.png" class="card-img-top" alt="Латте"
+                                style="height: 200px; object-fit: contain;">
+                            <div class="card-body">
+                                <h5 class="card-title">Латте</h5>
+                                <p class="card-text">1 300 ₸</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div data-aos="fade-up" class="col">
+                        <div class="card h-100">
+                            <img src="source/images/fletuayt.png" class="card-img-top" alt="Флэт уайт"
+                                style="height: 200px; object-fit: contain;">
+                            <div class="card-body">
+                                <h5 class="card-title">Флэт уайт</h5>
+                                <p class="card-text">1 400 ₸</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div data-aos="fade-up" class="col">
+                        <div class="card h-100">
+                            <img src="source/images/chesecake.png" class="card-img-top" alt="Чизкейк"
+                                style="height: 200px; object-fit: contain;">
+                            <div class="card-body">
+                                <h5 class="card-title">Чизкейк</h5>
+                                <p class="card-text">1 600 ₸</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div data-aos="fade-up" class="col">
+                        <div class="card h-100">
+                            <img src="source/images/brauni.png" class="card-img-top" alt="Брауни"
+                                style="height: 200px; object-fit: contain;">
+                            <div class="card-body">
+                                <h5 class="card-title">Брауни</h5>
+                                <p class="card-text">1 500 ₸</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="accent py-5" id="gallery">
+            <h2 class="text-center">Галерея</h2>
+            <div data-aos="fade-up" class="container">
+                <div id="carouselExampleAutoplaying" class="carousel slide g-4 p-4" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img src="source/images/pic1.png" class="d-block w-100 rounded" alt="...">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="source/images/pic2.png" class="d-block w-100 rounded" alt="...">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="source/images/pic3.png" class="d-block w-100 rounded" alt="...">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="source/images/pic4.png" class="d-block w-100 rounded" alt="...">
+                        </div>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying"
+                        data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying"
+                        data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="higt-accent desktop" id="reviews">
+            <div class="container py-5">
+                <h2 class="text-center">Наши отзывы</h2>
+                <div class="card-group g-4 p-4">
+                    <div data-aos="fade-right" class="card m-2 rounded">
+                        <img src="source/images/anna_up.png" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">🦊Анна</h5>
+                            <p class="card-text">"Очень уютное место! Всегда приятная музыка и ароматный кофе. Люблю
+                                приходить сюда с книгой по выходным."</p>
+                        </div>
+                    </div>
+                    <div data-aos="fade-up" class="card m-2 rounded">
+                        <img src="source/images/maxim_up.png" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">🐱Максим</h5>
+                            <p class="card-text">"Латте у вас — просто огонь. Плюс, девочки-бариста всегда улыбаются.
+                                Атмосфера как дома!"</p>
+                        </div>
+                    </div>
+                    <div data-aos="fade-left" class="card m-2 rounded">
+                        <img src="source/images/ekaterina_up.png" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">🦝Екатерина</h5>
+                            <p class="card-text">"Часто беру кофе с собой по пути на работу. Быстро, вкусно и всегда
+                                стабильно."</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="higt-accent mobile" id="reviews">
+            <div class="container py-5">
+                <h2 class="text-center">Наши отзывы</h2>
+                <div class="card-group g-4 p-4">
+                    <div data-aos="fade-up" class="card m-2 rounded">
+                        <img src="source/images/anna_up.png" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">🦊Анна</h5>
+                            <p class="card-text">"Очень уютное место! Всегда приятная музыка и ароматный кофе. Люблю
+                                приходить сюда с книгой по выходным."</p>
+                        </div>
+                    </div>
+                    <div data-aos="fade-up" class="card m-2 rounded">
+                        <img src="source/images/maxim_up.png" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">🐱Максим</h5>
+                            <p class="card-text">"Латте у вас — просто огонь. Плюс, девочки-бариста всегда улыбаются.
+                                Атмосфера как дома!"</p>
+                        </div>
+                    </div>
+                    <div data-aos="fade-up" class="card m-2 rounded">
+                        <img src="source/images/ekaterina_up.png" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">🦝Екатерина</h5>
+                            <p class="card-text">"Часто беру кофе с собой по пути на работу. Быстро, вкусно и всегда
+                                стабильно."</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="py-5" id="map">
+            <h2 class="text-center">Где мы</h2>
+            <div class="map-container g-4 p-4">
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2906.39838009718!2d76.94827317695368!3d43.24307187885906!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38836f674df8735d%3A0x8b62328051569ff7!2sSeven%20Sky%20Coffee!5e0!3m2!1sru!2s!4v1753828775444!5m2!1sru!2s"
+                    allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </div>
+
+    </section>
+
+    <footer class="text-center text-lg-start mt-5 border-top higt-accent" id="contacts">
+        <div class="container p-4">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <p class="mb-2">
+                        <i class="bi bi-geo-alt-fill me-2"></i><strong>Адрес:</strong> г. Алматы, ул. Абая, 25
+                    </p>
+                    <p class="mb-2">
+                        <i class="bi bi-clock-fill me-2"></i><strong>Часы работы:</strong> каждый день с 8:00 до 22:00
+                    </p>
+                    <p class="mb-3">
+                        <i class="bi bi-instagram me-2"></i><strong>Instagram:</strong>
+                        <a href="https://instagram.com/kofe_na_uglu" target="_blank">@kofe_na_uglu</a>
+                    </p>
+
+                    <div class="d-flex justify-content-center gap-3 flex-wrap mt-3">
+                        <a href="https://wa.me/77001234567" target="_blank" class="btn custom-btn">
+                            <i class="bi bi-whatsapp me-1"></i> Написать в WhatsApp
+                        </a>
+                        <a href="mailto:example@email.com" class="btn custom-btn">
+                            <i class="bi bi-envelope-fill me-1"></i> Написать на почту
+                        </a>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q"
+        crossorigin="anonymous"></script>
+</body>
+
+<script>
+    setTimeout(() => {
+        const preloader = document.getElementById('preloader');
+        preloader.style.opacity = '0';
+        setTimeout(() => {
+            preloader.remove();
+        }, 500);
+    }, 1500);
+</script>
+
+
+
+
+
+
+</html>

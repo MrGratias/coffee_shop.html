@@ -1,0 +1,118 @@
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: #eaac7f;
+    margin-top: 6.5em;
+}
+
+#navbar {
+    background-color: rgb(73, 51, 35);
+}
+
+#navbar a {
+    font-size: larger;
+    color: rgb(234, 172, 127);
+}
+
+.navbar-brand {
+    padding: 1em;
+}
+
+
+#info {
+    scroll-margin-top: 92px;
+}
+
+#info p,
+#info h2 {
+    color: rgb(234, 172, 127);
+
+}
+
+.container.text-center .card.h-100 {
+    background-color: rgb(255, 223, 145);
+}
+
+.accent {
+    background-color: rgb(145, 104, 74);
+}
+
+.higt-accent {
+    background-color: rgb(73, 51, 35);
+    color: rgb(234, 172, 127);
+}
+
+.map-container {
+    width: 100%;
+    max-width: 900px;
+    /* можно изменить на 250px, если нужно меньше */
+    aspect-ratio: 3 / 2;
+    /* примерно 300x200 */
+    border-radius: 12px;
+    overflow: hidden;
+    margin: 20px auto;
+    /* по центру */
+}
+
+.map-container iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    border-radius: 12px;
+}
+
+footer a {
+    text-decoration: none;
+    color: rgb(234, 172, 127);
+}
+
+#reviews {
+    scroll-margin-top: 200px;
+}
+
+#menu {
+    scroll-margin-top: 200px;
+}
+
+#gallery {
+    scroll-margin-top: 150px;
+}
+
+.desktop {
+    display: block;
+}
+
+.mobile {
+    display: none;
+}
+
+#contacts {
+    display: flex;
+}
+
+
+.custom-btn {
+  background-color: rgb(145, 104, 74);
+  color: rgb(234, 172, 127);
+  border: 2px solid rgb(234, 172, 127);
+  transition: 0.3s ease;
+}
+
+.custom-btn:hover {
+  background-color: rgb(115, 80, 56); /* темнее */
+  color: rgb(234, 172, 127);
+  border-color: rgb(234, 172, 127);
+}
+
+
+@media (max-width: 850px) {
+    .desktop {
+        display: none;
+    }
+
+    .mobile {
+        display: block;
+    }
+}
