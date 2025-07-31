@@ -26,6 +26,19 @@
 
 <body>
 
+    <button id="scrollToTop"></button>
+    <script>
+        const btn = document.getElementById('scrollToTop');
+        window.addEventListener('scroll', () => {
+            btn.style.display = window.scrollY > 300 ? 'block' : 'none';
+        });
+        btn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    </script>
+
+
+
     <!-- AOS JS -->
     <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
     <script>
@@ -64,7 +77,7 @@
 
     <section>
 
-        <div  class="accent">
+        <div class="accent">
             <div class="container p-5" id="info">
                 <div class="row align-items-center">
                     <div class="col-md-6">
@@ -245,12 +258,14 @@
             </div>
         </div>
 
-        <div class="py-5" id="map">
-            <h2 class="text-center">Где мы</h2>
-            <div class="map-container g-4 p-4">
-                <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2906.39838009718!2d76.94827317695368!3d43.24307187885906!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38836f674df8735d%3A0x8b62328051569ff7!2sSeven%20Sky%20Coffee!5e0!3m2!1sru!2s!4v1753828775444!5m2!1sru!2s"
-                    allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        <div class="container">
+            <div class="py-5" id="map">
+                <h2 class="text-center">Где мы?</h2>
+                <div class="map-container g-4 p-4">
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2906.39838009718!2d76.94827317695368!3d43.24307187885906!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38836f674df8735d%3A0x8b62328051569ff7!2sSeven%20Sky%20Coffee!5e0!3m2!1sru!2s!4v1753828775444!5m2!1sru!2s"
+                        allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
             </div>
         </div>
 
@@ -286,6 +301,17 @@
         </div>
     </footer>
 
+    <script>
+        const scrollBtn = document.getElementById("scrollToTop");
+
+        window.addEventListener("scroll", () => {
+            scrollBtn.style.display = (window.pageYOffset > 300) ? "block" : "none";
+        });
+
+        scrollBtn.addEventListener("click", () => {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+    </script>
 
 
 
