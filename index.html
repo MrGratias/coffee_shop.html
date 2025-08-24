@@ -1,338 +1,307 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="source/styles/style.css">
-    <link rel="stylesheet" href="source/styles/fonts.css">
-    <link rel="stylesheet" href="source/styles/preloader.css">
-    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
-    <title>Home</title>
-
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SVG → PNG (пакетная конвертация, офлайн)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script>
+  <style>
+    :root { --bg:#0b0f14; --panel:#111824; --muted:#8aa0b6; --acc:#7cdbff; --ok:#5ee3a1; --warn:#ffd166; --err:#ff6b6b; }
+    * { box-sizing: border-box; }
+    html,body{ height:100%; }
+    body{ margin:0; font-family:Inter,system-ui,Segoe UI,Roboto,Arial,sans-serif; background:linear-gradient(180deg,#0b0f14,#0a0e13); color:#e6eef7; }
+    .wrap{ max-width:1000px; margin:40px auto; padding:24px; }
+    h1{ font-size:28px; margin:0 0 8px; letter-spacing:.2px; }
+    p.sub{ margin:0 0 24px; color:var(--muted); }
+    .grid{ display:grid; grid-template-columns:1fr 360px; gap:20px; }
+    .card{ background:var(--panel); border:1px solid #1c2940; border-radius:16px; padding:16px; box-shadow:0 6px 24px rgba(0,0,0,.35); }
+    .drop{ border:2px dashed #2a3a57; border-radius:14px; padding:24px; text-align:center; transition:.2s; cursor:pointer; }
+    .drop.drag{ border-color:var(--acc); background:rgba(124,219,255,.06); }
+    .drop input{ display:none; }
+    .pill{ display:inline-flex; align-items:center; gap:8px; padding:10px 14px; border-radius:999px; background:#0f1624; border:1px solid #1f2b45; color:#cfe7ff; }
+    .list{ max-height:360px; overflow:auto; margin-top:12px; }
+    .row{ display:grid; grid-template-columns:auto 1fr auto; gap:12px; align-items:center; padding:8px 10px; border-radius:12px; border:1px solid #1c2940; background:#0f1624; margin-bottom:8px; }
+    .row .badge{ font-size:12px; color:#9fb3c8; background:#0b1422; border:1px solid #1f2b45; padding:4px 8px; border-radius:999px; }
+    label{ display:block; font-weight:600; font-size:13px; margin:12px 0 6px; color:#cfe7ff; }
+    .ctrl{ width:100%; padding:10px 12px; border-radius:10px; border:1px solid #1f2b45; background:#0f1624; color:#e6eef7; }
+    .rowbtn,.btn{ appearance:none; border:0; background:#183557; color:#d8ecff; padding:10px 14px; border-radius:12px; font-weight:600; cursor:pointer; transition:.18s; }
+    .rowbtn:hover,.btn:hover{ transform:translateY(-1px); box-shadow:0 8px 18px rgba(0,0,0,.25); }
+    .btn.primary{ background:linear-gradient(135deg,#1b7bd6,#3ac7ff); color:#06101a; }
+    .btn.ghost{ background:#0f1624; border:1px solid #1f2b45; }
+    .hint{ font-size:12px; color:#9fb3c8; margin-top:6px; }
+    .footer{ display:flex; gap:10px; flex-wrap:wrap; margin-top:14px; }
+    .ok{ color:var(--ok); }
+    .warn{ color:var(--warn); }
+    .err{ color:var(--err); }
+    @media (max-width: 980px){ .grid{ grid-template-columns:1fr; } }
+  </style>
 </head>
-
-<div id="preloader">
-    <img src="source/images/hedgehog.png" alt="Hedgehog">
-    <div class="loading-bar">
-        <div class="bar-fill"></div>
-    </div>
-</div>
-
-
-
 <body>
+  <div class="wrap">
+    <h1>SVG → PNG (пакетная конвертация)</h1>
+    <p class="sub">Заточено под иконки (Papirus/Theme Park). Работает полностью офлайн в браузере. Ничего никуда не загружается.</p>
 
-    <button id="scrollToTop"></button>
-    <script>
-        const btn = document.getElementById('scrollToTop');
-        window.addEventListener('scroll', () => {
-            btn.style.display = window.scrollY > 300 ? 'block' : 'none';
-        });
-        btn.addEventListener('click', () => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-    </script>
-
-
-
-    <!-- AOS JS -->
-    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
-    <script>
-        AOS.init({
-            duration: 1000, // длительность анимации в мс
-            offset: 120,   // отступ от нижнего края экрана до начала анимации
-            once: false     // true — анимация запускается 1 раз
-        });
-    </script>
-
-
-    <header>
-
-        <nav class="navbar fixed-top navbar-expand-xl" id="navbar">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="#"><img src="source/images/logo.png" alt="404"> Кофе на углу</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false"
-                    aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                    <div class="navbar-nav">
-                        <a class="nav-link" href="#info">О нас</a>
-                        <a class="nav-link" href="#menu">Меню</a>
-                        <a class="nav-link" href="#gallery">Фото</a>
-                        <a class="nav-link" href="#reviews">Отзывы</a>
-                        <a class="nav-link" href="#map">Где мы</a>
-                        <a class="nav-link" href="#contacts">Контакты</a>
-                    </div>
-                </div>
-            </div>
-        </nav>
-
-    </header>
-
-    <section>
-
-        <div class="accent">
-            <div class="container p-5" id="info">
-                <div class="row align-items-center">
-                    <div class="col-md-6">
-                        <h2>О нас</h2>
-                        <p>Мы — небольшая, уютная кофейня в центре Алматы. У нас свежая обжарка, авторские напитки и
-                            спокойная атмосфера — идеально для отдыха или продуктивной работы.</p>
-                    </div>
-                    <div class="col-md-6">
-                        <img src="https://static.insales-cdn.com/r/allnD-jy554/rs:fit:1000:1000:1/plain/images/products/1/2713/653920921/coffee-shop-fragrance-oil-web_result.jpg@jpg"
-                            class="img-fluid rounded" alt="Наша кофейня">
-                    </div>
-                </div>
-            </div>
+    <div class="grid">
+      <!-- Left: files -->
+      <div class="card">
+        <div id="drop" class="drop">
+          <input id="fileInp" type="file" accept=".svg" multiple>
+          <div class="pill">Перетащи сюда SVG или нажми, чтобы выбрать</div>
+          <div class="hint" style="margin-top:8px">Поддерживается множественный выбор • Название сохранится • Можно до нескольких сотен файлов</div>
         </div>
 
-        <div class="container py-5" id="menu">
-            <h2 class="text-center">Меню</h2>
-            <div class="text-center">
-                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4 p-4">
-                    <div data-aos="fade-up" class="col">
-                        <div class="card h-100">
-                            <img src="source/images/expreso.png" class="card-img-top" alt="Капучино"
-                                style="height: 200px; object-fit: contain;">
-                            <div class="card-body">
-                                <h5 class="card-title">Эспрессо</h5>
-                                <p class="card-text">800 ₸</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div data-aos="fade-up" class="col">
-                        <div class="card h-100">
-                            <img src="source/images/capuchino.png" class="card-img-top" alt="Капучино"
-                                style="height: 200px; object-fit: contain;">
-                            <div class="card-body">
-                                <h5 class="card-title">Капучино</h5>
-                                <p class="card-text">1 200 ₸</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div data-aos="fade-up" class="col">
-                        <div class="card h-100">
-                            <img src="source/images/latte.png" class="card-img-top" alt="Латте"
-                                style="height: 200px; object-fit: contain;">
-                            <div class="card-body">
-                                <h5 class="card-title">Латте</h5>
-                                <p class="card-text">1 300 ₸</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div data-aos="fade-up" class="col">
-                        <div class="card h-100">
-                            <img src="source/images/fletuayt.png" class="card-img-top" alt="Флэт уайт"
-                                style="height: 200px; object-fit: contain;">
-                            <div class="card-body">
-                                <h5 class="card-title">Флэт уайт</h5>
-                                <p class="card-text">1 400 ₸</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div data-aos="fade-up" class="col">
-                        <div class="card h-100">
-                            <img src="source/images/chesecake.png" class="card-img-top" alt="Чизкейк"
-                                style="height: 200px; object-fit: contain;">
-                            <div class="card-body">
-                                <h5 class="card-title">Чизкейк</h5>
-                                <p class="card-text">1 600 ₸</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div data-aos="fade-up" class="col">
-                        <div class="card h-100">
-                            <img src="source/images/brauni.png" class="card-img-top" alt="Брауни"
-                                style="height: 200px; object-fit: contain;">
-                            <div class="card-body">
-                                <h5 class="card-title">Брауни</h5>
-                                <p class="card-text">1 500 ₸</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="list" id="fileList"></div>
+      </div>
 
+      <!-- Right: settings -->
+      <div class="card">
+        <div>
+          <label for="size">Размер PNG (px)</label>
+          <select id="size" class="ctrl">
+            <option value="192">192 (рекомендовано для Samsung Theme Park)</option>
+            <option value="256">256</option>
+            <option value="384">384</option>
+            <option value="512">512</option>
+            <option value="custom">Свой размер…</option>
+          </select>
+          <input id="customSize" class="ctrl" type="number" min="16" max="2048" step="1" placeholder="Введите размер, например 224" style="display:none; margin-top:8px">
+
+          <label for="bg">Фон</label>
+          <select id="bg" class="ctrl">
+            <option value="transparent">Прозрачный</option>
+            <option value="#ffffff">Белый</option>
+            <option value="#000000">Чёрный</option>
+          </select>
+
+          <label for="padding">Отступ внутри (padding)</label>
+          <input id="padding" class="ctrl" type="number" min="0" max="128" value="0">
+          <div class="hint">0 = без отступов. Для «воздуха» вокруг иконки поставь 8–16.</div>
+
+          <label for="scale">Масштаб SVG</label>
+          <select id="scale" class="ctrl">
+            <option value="fit">Вписать (сохранить пропорции)</option>
+            <option value="fill">Заполнить (обрежет края)</option>
+          </select>
+
+          <label>Имена файлов</label>
+          <div style="display:flex; gap:8px;">
+            <input id="prefix" class="ctrl" placeholder="Префикс (необязательно)" style="flex:1">
+            <input id="suffix" class="ctrl" placeholder="Суффикс (необязательно)" style="flex:1">
+          </div>
+
+          <div class="footer">
+            <button id="convertAll" class="btn primary">Конвертировать и скачать ZIP</button>
+            <button id="clear" class="btn ghost">Очистить список</button>
+          </div>
+          <div class="hint">Для скачивания отдельных PNG нажимай кнопку у строки файла.</div>
         </div>
-
-        <div class="accent py-5" id="gallery">
-            <h2 class="text-center">Галерея</h2>
-            <div data-aos="fade-up" class="container">
-                <div id="carouselExampleAutoplaying" class="carousel slide g-4 p-4" data-bs-ride="carousel">
-                    <div class="carousel-inner">
-                        <div class="carousel-item active">
-                            <img src="source/images/pic1.png" class="d-block w-100 rounded" alt="...">
-                        </div>
-                        <div class="carousel-item">
-                            <img src="source/images/pic2.png" class="d-block w-100 rounded" alt="...">
-                        </div>
-                        <div class="carousel-item">
-                            <img src="source/images/pic3.png" class="d-block w-100 rounded" alt="...">
-                        </div>
-                        <div class="carousel-item">
-                            <img src="source/images/pic4.png" class="d-block w-100 rounded" alt="...">
-                        </div>
-                    </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying"
-                        data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying"
-                        data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <div class="higt-accent desktop" id="reviews">
-            <div class="container py-5">
-                <h2 class="text-center">Наши отзывы</h2>
-                <div class="card-group g-4 p-4">
-                    <div data-aos="fade-right" class="card m-2 rounded">
-                        <img src="source/images/anna_up.png" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">🦊Анна</h5>
-                            <p class="card-text">"Очень уютное место! Всегда приятная музыка и ароматный кофе. Люблю
-                                приходить сюда с книгой по выходным."</p>
-                        </div>
-                    </div>
-                    <div data-aos="fade-up" class="card m-2 rounded">
-                        <img src="source/images/maxim_up.png" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">🐱Максим</h5>
-                            <p class="card-text">"Латте у вас — просто огонь. Плюс, девочки-бариста всегда улыбаются.
-                                Атмосфера как дома!"</p>
-                        </div>
-                    </div>
-                    <div data-aos="fade-left" class="card m-2 rounded">
-                        <img src="source/images/ekaterina_up.png" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">🦝Екатерина</h5>
-                            <p class="card-text">"Часто беру кофе с собой по пути на работу. Быстро, вкусно и всегда
-                                стабильно."</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="higt-accent mobile" id="reviews">
-            <div class="container py-5">
-                <h2 class="text-center">Наши отзывы</h2>
-                <div class="card-group g-4 p-4">
-                    <div data-aos="fade-up" class="card m-2 rounded">
-                        <img src="source/images/anna_up.png" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">🦊Анна</h5>
-                            <p class="card-text">"Очень уютное место! Всегда приятная музыка и ароматный кофе. Люблю
-                                приходить сюда с книгой по выходным."</p>
-                        </div>
-                    </div>
-                    <div data-aos="fade-up" class="card m-2 rounded">
-                        <img src="source/images/maxim_up.png" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">🐱Максим</h5>
-                            <p class="card-text">"Латте у вас — просто огонь. Плюс, девочки-бариста всегда улыбаются.
-                                Атмосфера как дома!"</p>
-                        </div>
-                    </div>
-                    <div data-aos="fade-up" class="card m-2 rounded">
-                        <img src="source/images/ekaterina_up.png" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">🦝Екатерина</h5>
-                            <p class="card-text">"Часто беру кофе с собой по пути на работу. Быстро, вкусно и всегда
-                                стабильно."</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="container">
-            <div class="py-5" id="map">
-                <h2 class="text-center">Где мы?</h2>
-                <div class="map-container g-4 p-4">
-                    <iframe
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2906.39838009718!2d76.94827317695368!3d43.24307187885906!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38836f674df8735d%3A0x8b62328051569ff7!2sSeven%20Sky%20Coffee!5e0!3m2!1sru!2s!4v1753828775444!5m2!1sru!2s"
-                        allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                </div>
-            </div>
-        </div>
-
-    </section>
-
-    <footer class="text-center text-lg-start mt-5 border-top higt-accent" id="contacts">
-        <div class="container p-4">
-            <div class="row justify-content-center">
-                <div class="col-md-8">
-                    <p class="mb-2">
-                        <i class="bi bi-geo-alt-fill me-2"></i><strong>Адрес:</strong> г. Алматы, ул. Абая, 25
-                    </p>
-                    <p class="mb-2">
-                        <i class="bi bi-clock-fill me-2"></i><strong>Часы работы:</strong> каждый день с 8:00 до 22:00
-                    </p>
-                    <p class="mb-3">
-                        <i class="bi bi-instagram me-2"></i><strong>Instagram:</strong>
-                        <a href="https://instagram.com/kofe_na_uglu" target="_blank">@kofe_na_uglu</a>
-                    </p>
-
-                    <div class="d-flex justify-content-center gap-3 flex-wrap mt-3">
-                        <a href="https://wa.me/77001234567" target="_blank" class="btn custom-btn">
-                            <i class="bi bi-whatsapp me-1"></i> Написать в WhatsApp
-                        </a>
-                        <a href="mailto:example@email.com" class="btn custom-btn">
-                            <i class="bi bi-envelope-fill me-1"></i> Написать на почту
-                        </a>
-                    </div>
-
-
-                </div>
-            </div>
-        </div>
-    </footer>
-
-    <script>
-        const scrollBtn = document.getElementById("scrollToTop");
-
-        window.addEventListener("scroll", () => {
-            scrollBtn.style.display = (window.pageYOffset > 300) ? "block" : "none";
-        });
-
-        scrollBtn.addEventListener("click", () => {
-            window.scrollTo({ top: 0, behavior: "smooth" });
-        });
-    </script>
-
-
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q"
-        crossorigin="anonymous"></script>
-</body>
+      </div>
+    </div>
+  </div>
 
 <script>
-    setTimeout(() => {
-        const preloader = document.getElementById('preloader');
-        preloader.style.opacity = '0';
-        setTimeout(() => {
-            preloader.remove();
-        }, 500);
-    }, 1500);
+(() => {
+  const fileInp = document.getElementById('fileInp');
+  const drop = document.getElementById('drop');
+  const list = document.getElementById('fileList');
+  const sizeSel = document.getElementById('size');
+  const customSizeInp = document.getElementById('customSize');
+  const bgSel = document.getElementById('bg');
+  const padInp = document.getElementById('padding');
+  const scaleSel = document.getElementById('scale');
+  const prefixInp = document.getElementById('prefix');
+  const suffixInp = document.getElementById('suffix');
+  const convertAllBtn = document.getElementById('convertAll');
+  const clearBtn = document.getElementById('clear');
+
+  let files = [];
+
+  const getTargetSize = () => {
+    const val = sizeSel.value;
+    if (val === 'custom') {
+      const n = parseInt(customSizeInp.value, 10);
+      return Number.isFinite(n) && n > 0 ? n : 192;
+    }
+    return parseInt(val, 10);
+  };
+
+  sizeSel.addEventListener('change', () => {
+    customSizeInp.style.display = sizeSel.value === 'custom' ? 'block' : 'none';
+  });
+
+  const human = (n) => `${(n/1024).toFixed(1)} KB`;
+
+  const rowEl = (file, idx) => {
+    const r = document.createElement('div');
+    r.className = 'row';
+    const left = document.createElement('div');
+    left.className = 'badge';
+    left.textContent = `${idx+1}`;
+    const mid = document.createElement('div');
+    mid.innerHTML = `<div style="font-weight:600">${file.name}</div><div class="hint">${human(file.size)}</div>`;
+    const right = document.createElement('div');
+    const btn = document.createElement('button');
+    btn.className = 'rowbtn';
+    btn.textContent = 'PNG';
+    btn.addEventListener('click', async () => {
+      const blob = await convertOne(file);
+      saveAs(blob, outputName(file.name));
+    });
+    right.appendChild(btn);
+    r.append(left, mid, right);
+    return r;
+  };
+
+  const renderList = () => {
+    list.innerHTML = '';
+    files.forEach((f, i) => list.appendChild(rowEl(f, i)));
+  };
+
+  const outputName = (name) => {
+    const base = name.replace(/\.svg$/i, '');
+    const prefix = (prefixInp.value || '').trim();
+    const suffix = (suffixInp.value || '').trim();
+    const safe = (s) => s.replace(/[^a-zA-Z0-9._-]+/g, '-');
+    return `${safe(prefix)}${safe(base)}${safe(suffix)}.png`.replace(/^\-+/, '');
+  };
+
+  const readFileText = (file) => new Promise((res, rej) => {
+    const fr = new FileReader();
+    fr.onload = () => res(fr.result);
+    fr.onerror = (e) => rej(e);
+    fr.readAsText(file);
+  });
+
+  const rasterizeSVG = async (svgText, outSize, bg, mode, padding) => {
+    // Inject width/height if missing to improve rendering consistency
+    let svg = svgText.replace(/<svg(\s|>)/i, (m) => m);
+    // Create blob URL
+    const svgBlob = new Blob([svg], { type: 'image/svg+xml' });
+    const url = URL.createObjectURL(svgBlob);
+    try {
+      const img = await createImageBitmap(svgBlob).catch(async () => {
+        const image = new Image();
+        image.decoding = 'async';
+        image.crossOrigin = 'anonymous';
+        image.src = url;
+        await image.decode();
+        return image;
+      });
+
+      // Use natural dimensions if available
+      const srcW = img.width || outSize;
+      const srcH = img.height || outSize;
+
+      const pad = Math.max(0, parseInt(padding, 10) || 0);
+      const canvas = document.createElement('canvas');
+      canvas.width = outSize;
+      canvas.height = outSize;
+      const ctx = canvas.getContext('2d');
+
+      if (bg !== 'transparent') {
+        ctx.fillStyle = bg;
+        ctx.fillRect(0,0,canvas.width,canvas.height);
+      } else {
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+      }
+
+      const box = { x: pad, y: pad, w: outSize - pad*2, h: outSize - pad*2 };
+
+      let dw = box.w, dh = box.h, dx = box.x, dy = box.y;
+      const aspect = srcW / srcH;
+      const boxAspect = box.w / box.h;
+
+      if (mode === 'fit') {
+        if (aspect > boxAspect) { // limit by width
+          dh = box.w / aspect;
+          dy = box.y + (box.h - dh) / 2;
+        } else { // limit by height
+          dw = box.h * aspect;
+          dx = box.x + (box.w - dw) / 2;
+        }
+      } else { // fill
+        if (aspect > boxAspect) { // need taller
+          dw = box.h * aspect;
+          dx = box.x + (box.w - dw) / 2;
+          dh = box.h; dy = box.y;
+        } else {
+          dh = box.w / aspect;
+          dy = box.y + (box.h - dh) / 2;
+          dw = box.w; dx = box.x;
+        }
+      }
+
+      ctx.imageSmoothingEnabled = true;
+      ctx.imageSmoothingQuality = 'high';
+      ctx.drawImage(img, dx, dy, dw, dh);
+
+      const blob = await new Promise((res) => canvas.toBlob(res, 'image/png'));
+      return blob;
+    } finally {
+      URL.revokeObjectURL(url);
+    }
+  };
+
+  const convertOne = async (file) => {
+    const txt = await readFileText(file);
+    const size = getTargetSize();
+    const bg = bgSel.value;
+    const mode = scaleSel.value;
+    const pad = parseInt(padInp.value, 10) || 0;
+    return rasterizeSVG(txt, size, bg, mode, pad);
+  };
+
+  // DnD / select
+  const addFiles = (flist) => {
+    const arr = Array.from(flist).filter(f => /\.svg$/i.test(f.name));
+    files = files.concat(arr);
+    renderList();
+  };
+
+  drop.addEventListener('click', () => fileInp.click());
+
+  ['dragenter','dragover'].forEach(ev => drop.addEventListener(ev, e => {
+    e.preventDefault(); e.stopPropagation(); drop.classList.add('drag');
+  }));
+  ;['dragleave','drop'].forEach(ev => drop.addEventListener(ev, e => {
+    e.preventDefault(); e.stopPropagation(); drop.classList.remove('drag');
+  }));
+  drop.addEventListener('drop', (e) => addFiles(e.dataTransfer.files));
+  fileInp.addEventListener('change', (e) => addFiles(e.target.files));
+
+  clearBtn.addEventListener('click', () => { files = []; renderList(); fileInp.value=''; });
+
+  convertAllBtn.addEventListener('click', async () => {
+    if (!files.length) { alert('Добавь SVG-файлы в список.'); return; }
+    const zip = new JSZip();
+    const size = getTargetSize();
+    const bg = bgSel.value;
+    const mode = scaleSel.value;
+    const pad = parseInt(padInp.value, 10) || 0;
+
+    // Process sequentially to reduce memory spikes on mobile
+    for (let i = 0; i < files.length; i++) {
+      const f = files[i];
+      try {
+        const txt = await readFileText(f);
+        const blob = await rasterizeSVG(txt, size, bg, mode, pad);
+        zip.file(outputName(f.name), blob);
+        list.children[i].style.outline = '2px solid var(--ok)';
+      } catch (e) {
+        console.error('Ошибка конвертации', f.name, e);
+        list.children[i].style.outline = '2px solid var(--err)';
+      }
+    }
+
+    const content = await zip.generateAsync({ type: 'blob' });
+    const stamp = new Date().toISOString().replace(/[:.]/g,'-');
+    saveAs(content, `svg2png_${size}px_${bg === 'transparent' ? 'transparent' : 'bg' }_${stamp}.zip`);
+  });
+})();
 </script>
-
-
-
-
-
-
+</body>
 </html>
